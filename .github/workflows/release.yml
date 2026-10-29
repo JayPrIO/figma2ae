@@ -1,15 +1,25 @@
 name: Release
 
+# Creates a GitHub Release automatically whenever a version tag is created — via
+# `git push --tags` or the GitHub UI. Re-run for an existing tag with "Run workflow".
 on:
   push:
     tags: ['v*.*.*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to (re)build and publish, e.g. v1.0.0
+        required: true
 
 permissions:
   contents: write
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
   cancel-in-progress: false
+
+env:
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
 
 jobs:
   release:
@@ -18,6 +28,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
 
       - uses: actions/setup-node@v4
         with:
@@ -28,7 +40,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Verify tag matches version
-        run: node scripts/check-sources.mjs --tag "${GITHUB_REF_NAME}"
+        run: node scripts/check-sources.mjs --tag "$TAG"
 
       - name: Typecheck
         run: npm run typecheck
@@ -45,22 +57,26 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v2
         with:
-          name: Figma2AE ${{ github.ref_name }}
+          tag_name: ${{ env.TAG }}
+          name: Figma2AE ${{ env.TAG }}
           draft: false
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ contains(env.TAG, '-') }}
+          make_latest: ${{ !contains(env.TAG, '-') }}
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            dist/release/Figma2AE-figma-plugin-*.zip
-            dist/release/Figma2AE-ae-extension-*.zip
+            dist/release/Figma2AE-figma-plugin.zip
+            dist/release/Figma2AE-ae-extension.zip
             dist/release/SHA256SUMS.txt
           body: |
             ## Install
 
-            **Figma** — unzip `Figma2AE-figma-plugin-*.zip`, then in the Figma desktop app:
-            *Plugins ▸ Development ▸ Import plugin from manifest…* → `figma-plugin/manifest.json`.
+            Full guide: https://jayprio.github.io/figma2ae/docs.html
 
-            **After Effects 2023+ (macOS)** — unzip `Figma2AE-ae-extension-*.zip`, run `sh install.sh`,
+            **After Effects 2023+ (macOS)** — unzip `Figma2AE-ae-extension.zip`, run `sh install.sh`,
             restart After Effects, open *Window ▸ Extensions ▸ Figma2AE*.
+
+            **Figma (desktop app)** — unzip `Figma2AE-figma-plugin.zip` somewhere permanent, then
+            *Plugins ▸ Development ▸ Import plugin from manifest…* → `figma-plugin/manifest.json`.
 
             Verify downloads with `shasum -a 256 -c SHA256SUMS.txt`.

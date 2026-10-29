@@ -10,3 +10,5 @@ PROMPT.md
 .claude
 received/
 test-results/
+*.swp
+*.swo

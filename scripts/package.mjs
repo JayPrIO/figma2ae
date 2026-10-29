@@ -62,8 +62,10 @@ await mkdir(join(stage, 'ae'), { recursive: true });
 await cp(join(dist, 'ae-extension'), join(stage, 'ae'), { recursive: true });
 await writeFile(join(stage, 'ae', 'README.txt'), README_AE);
 
-const figmaZip = `Figma2AE-figma-plugin-v${version}.zip`;
-const aeZip = `Figma2AE-ae-extension-v${version}.zip`;
+// Stable names so https://github.com/<owner>/<repo>/releases/latest/download/<name> always works;
+// the version lives in the release title, README.txt and SHA256SUMS.txt.
+const figmaZip = `Figma2AE-figma-plugin.zip`;
+const aeZip = `Figma2AE-ae-extension.zip`;
 await zip(join(stage, 'figma'), join(out, figmaZip), ['.']);
 await zip(join(stage, 'ae'), join(out, aeZip), ['.']);
 await rm(stage, { recursive: true, force: true });

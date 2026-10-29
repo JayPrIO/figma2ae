@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Docs — Figma2AE</title>
+  <meta name="description" content="Install and use Figma2AE: the Figma plugin and After Effects panel that turn Figma designs into native After Effects layers." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a class="logo" href="./"><img src="favicon.svg" alt="" /><span>Figma<b>2</b>AE</span></a>
+      <div class="nav-links">
+        <a href="./" class="hide-sm">Home</a>
+        <a href="docs.html" aria-current="page">Docs</a>
+        <a href="https://github.com/JayPrIO/figma2ae/releases/latest">Download</a>
+        <a href="https://github.com/JayPrIO/figma2ae">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap docs">
+    <aside class="toc" aria-label="On this page">
+      <p>Get started</p>
+      <a href="#requirements">Requirements</a>
+      <a href="#install">Install</a>
+      <a href="#install-ae">1 · After Effects panel</a>
+      <a href="#install-figma">2 · Figma plugin</a>
+      <a href="#first-sync">3 · Your first sync</a>
+      <p>Using Figma2AE</p>
+      <a href="#plugin">The Figma plugin</a>
+      <a href="#break-apart">Break Apart</a>
+      <a href="#options">Advanced options</a>
+      <a href="#export">Exporting PNG / SVG / PDF</a>
+      <a href="#offline">Working without a connection</a>
+      <a href="#panel">The After Effects panel</a>
+      <a href="#mapping">What gets converted</a>
+      <a href="#tips">Tips for best results</a>
+      <p>Maintenance</p>
+      <a href="#update">Updating</a>
+      <a href="#uninstall">Uninstalling</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#faq">FAQ &amp; privacy</a>
+      <a href="#developers">Building from source</a>
+    </aside>
+
+    <main class="prose">
+      <h1>Figma2AE documentation</h1>
+      <p class="lead">Everything you need to install Figma2AE, send your first design to After Effects, and get the most out of it.</p>
+
+      <h2 id="requirements">Requirements</h2>
+      <ul>
+        <li><strong>macOS</strong> (Apple Silicon or Intel) — any version your After Effects supports.</li>
+        <li><strong>Adobe After Effects 2023 (23.0) or newer.</strong> Per-character text styles (several fonts/colours in one text layer) need 24.3 or newer.</li>
+        <li><strong>The Figma desktop app.</strong> Plugins installed from a manifest file run in the desktop app.</li>
+        <li>The fonts used in your design installed on your Mac (otherwise After Effects substitutes them).</li>
+      </ul>
+
+      <h2 id="install">Install</h2>
+      <p>Figma2AE has two parts that talk to each other on your computer: a <strong>panel inside After Effects</strong> and a <strong>plugin inside Figma</strong>. Install both.</p>
+      <div class="callout">
+        <p>Download both files from the <a href="https://github.com/JayPrIO/figma2ae/releases/latest">latest release</a>:</p>
+        <p><a href="https://github.com/JayPrIO/figma2ae/releases/latest/download/Figma2AE-ae-extension.zip"><code>Figma2AE-ae-extension.zip</code></a> and <a href="https://github.com/JayPrIO/figma2ae/releases/latest/download/Figma2AE-figma-plugin.zip"><code>Figma2AE-figma-plugin.zip</code></a></p>
+      </div>
+
+      <h3 id="install-ae">Step 1 — Install the After Effects panel</h3>
+      <ol>
+        <li>Double-click <code>Figma2AE-ae-extension.zip</code> to unzip it.</li>
+        <li>Open <strong>Terminal</strong> (Applications ▸ Utilities ▸ Terminal), type <code>cd </code> (with a space), drag the unzipped folder into the Terminal window, and press <kbd>Return</kbd>.</li>
+        <li>Run the installer:
+          <div class="copy"><pre><code>sh install.sh</code></pre></div>
+          It copies the panel into <code>~/Library/Application Support/Adobe/CEP/extensions/</code> and enables Adobe's setting for loading extensions that aren't distributed through Adobe Exchange.
+        </li>
+        <li><strong>Quit and reopen After Effects.</strong></li>
+        <li>Open <strong>Window ▸ Extensions ▸ Figma2AE</strong>. The panel should say <em>“Listening on :7741”</em>.</li>
+        <li>Dock the panel anywhere you like. It needs to be <strong>open</strong> (it can be in a background tab) whenever you sync from Figma.</li>
+      </ol>
+      <div class="callout warn"><p>If <em>Figma2AE</em> doesn't appear under Window ▸ Extensions, see <a href="#ts-panel-missing">Troubleshooting</a>.</p></div>
+
+      <h3 id="install-figma">Step 2 — Install the Figma plugin</h3>
+      <ol>
+        <li>Unzip <code>Figma2AE-figma-plugin.zip</code> and move the folder somewhere permanent, e.g. your <em>Documents</em> folder. Figma loads the plugin from this folder every time, so don't delete it.</li>
+        <li>Open the <strong>Figma desktop app</strong> and any design file.</li>
+        <li>From the main menu choose <strong>Plugins ▸ Development ▸ Import plugin from manifest…</strong></li>
+        <li>Select <code>figma-plugin/manifest.json</code> inside the unzipped folder.</li>
+        <li>Run it from <strong>Plugins ▸ Development ▸ Figma2AE</strong>. Tip: right-click the canvas ▸ Plugins to find it quickly, or use <kbd>⌘</kbd> <kbd>/</kbd> and type “Figma2AE”.</li>
+      </ol>
+
+      <h3 id="first-sync">Step 3 — Your first sync</h3>
+      <ol>
+        <li>Make sure After Effects is open with the Figma2AE panel visible.</li>
+        <li>In Figma, open the plugin. The status pill in its top-right corner turns green and shows your After Effects version once it's connected.</li>
+        <li>Select one or more frames (or any layers) on the canvas.</li>
+        <li>Press <strong>Sync Selection</strong>.</li>
+        <li>In After Effects, a new composition opens for each selected frame, inside a <code>Figma2AE</code> folder in the Project panel.</li>
+      </ol>
+      <div class="callout ok"><p>Everything a sync creates is a single undo step: <kbd>⌘</kbd> <kbd>Z</kbd> in After Effects removes it.</p></div>
+
+      <h2 id="plugin">The Figma plugin</h2>
+      <ul>
+        <li><strong>Status pill</strong> — green when connected to After Effects. If it says <em>After Effects not found</em>, open the panel in AE; the plugin reconnects automatically (or press <em>Retry now</em>).</li>
+        <li><strong>Selection</strong> — shows what will be sent.</li>
+        <li><strong>Break Apart Layers</strong> — how the design is laid out in AE (see below).</li>
+        <li><strong>Advanced</strong> — composition and image settings.</li>
+        <li><strong>Sync Selection</strong> — sends the selection to After Effects.</li>
+        <li><strong>Export</strong> — saves the selection as PNG, SVG, PDF or an AE bundle.</li>
+        <li><strong>Notes</strong> — after each sync, expand <em>notes</em> to see anything that was approximated (e.g. a missing font).</li>
+      </ul>
+      <p>Your settings are remembered per computer.</p>
+
+      <h3 id="break-apart">Break Apart Layers</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>ON (default)</th><th>OFF</th></tr></thead>
+        <tbody>
+          <tr><td>Layers</td><td>One AE layer per Figma layer</td><td>One shape layer per selection, with nested groups</td></tr>
+          <tr><td>Hierarchy</td><td>Frames/groups become parent layers (a background shape layer or a Null)</td><td>Kept as shape groups inside the layer</td></tr>
+          <tr><td>Text, images, gradients, effects</td><td>Own layers</td><td>Split into their own layers (AE requires it), parented under one Null, stacking preserved</td></tr>
+          <tr><td>Best for</td><td>Animating individual elements</td><td>Icons, illustrations, keeping the timeline tidy</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="options">Advanced options</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Option</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Clipped frames as precomps</td><td>On: frames with <em>Clip content</em> become nested precomps. Off: they're clipped with alpha track mattes in the same comp.</td></tr>
+          <tr><td>Include hidden layers</td><td>Brings hidden Figma layers across as disabled AE layers.</td></tr>
+          <tr><td>Destination</td><td><em>New comp per frame</em> (default) or <em>Active comp</em> — adds everything to the composition open in AE, centred, keeping the relative layout.</td></tr>
+          <tr><td>Image scale</td><td>Resolution (1×–4×) for images that must be rasterised, and for PNG export.</td></tr>
+          <tr><td>Frame rate / Duration</td><td>Settings for newly created compositions.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="export">Exporting PNG / SVG / PDF</h3>
+      <p>Pick a format next to the <strong>Export</strong> button and press it:</p>
+      <ul>
+        <li><strong>PNG</strong> — at the <em>Image scale</em> set under Advanced.</li>
+        <li><strong>SVG</strong> — vector, with text converted to outlines.</li>
+        <li><strong>PDF</strong> — vector document.</li>
+        <li><strong>AE bundle</strong> — a <code>.f2ae.json</code> file you can import into After Effects later (see below).</li>
+      </ul>
+      <p>One selected layer downloads as a single file; several layers download together as a <code>.zip</code>. Export works without After Effects.</p>
+
+      <h3 id="offline">Working without a connection</h3>
+      <p>No After Effects on this machine, or handing work to a colleague? Choose <strong>AE bundle</strong> and press <strong>Export</strong>. In After Effects, press <strong>Import bundle…</strong> in the Figma2AE panel and pick the <code>.f2ae.json</code> file. The result is identical to a live sync, images included.</p>
+
+      <h2 id="panel">The After Effects panel</h2>
+      <ul>
+        <li><strong>Status</strong> — <em>Listening on :7741 · 1 Figma client</em> means a Figma plugin is connected. Yellow while building.</li>
+        <li><strong>Import bundle…</strong> — builds a <code>.f2ae.json</code> exported from the plugin.</li>
+        <li><strong>Activity</strong> — the last 20 syncs, with layer counts, timings and any notes.</li>
+      </ul>
+      <p>The panel creates a <code>Figma2AE</code> folder in your project with your comps, a <code>Precomps</code> folder for clipped frames, and an <code>Assets</code> folder for images. Re-syncing the same image reuses the existing footage item.</p>
+
+      <h2 id="mapping">What gets converted</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>In Figma</th><th>In After Effects</th></tr></thead>
+        <tbody>
+          <tr><td>Selected frame / component / instance</td><td>Composition of the same size</td></tr>
+          <tr><td>Nested frame with a fill or stroke</td><td>Shape layer that parents its children</td></tr>
+          <tr><td>Group, or frame without a fill</td><td>Null that parents its children</td></tr>
+          <tr><td>Frame with “Clip content”</td><td>Precomp (or alpha matte, see options)</td></tr>
+          <tr><td>Rectangle, ellipse</td><td>Parametric rectangle / ellipse path (rounded corners kept)</td></tr>
+          <tr><td>Vector, boolean, star, polygon, line, mixed corner radii</td><td>Bezier path (open paths stay open)</td></tr>
+          <tr><td>Solid fills and strokes</td><td>Fill / Stroke (width, caps, joins, dashes)</td></tr>
+          <tr><td>Inside / outside strokes</td><td>Matched exactly (offset shape or outlined stroke)</td></tr>
+          <tr><td>Linear / radial gradient</td><td>Gradient layer recoloured with the <em>Tritone</em> effect; varying transparency via a luma matte. Edit colours in Effect Controls ▸ Tritone.</td></tr>
+          <tr><td>Image fill (Fill, Fit, Crop)</td><td>Footage layer placed exactly and masked to the shape</td></tr>
+          <tr><td>Text</td><td>Point text (auto width) or paragraph text (fixed width), with font, size, tracking, line height, alignment, case and mixed styles</td></tr>
+          <tr><td>Mask (alpha, vector, luminance)</td><td>Track matte on the layers above it</td></tr>
+          <tr><td>Drop shadow / layer blur</td><td>Drop Shadow / Gaussian Blur effect</td></tr>
+          <tr><td>Inner shadow</td><td>Inner Shadow layer style</td></tr>
+          <tr><td>Opacity, blend modes, hidden layers</td><td>Layer opacity, blending mode, disabled layer</td></tr>
+          <tr><td>Stickies, tiled images, video, widgets…</td><td>High-resolution PNG (listed in the sync notes)</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Known limitations</h3>
+      <ul>
+        <li>Angular and diamond gradients are approximated as radial; gradients with more than 3 colour stops are approximated with 3.</li>
+        <li>Shadow <em>spread</em> and <em>background blur</em> have no After Effects equivalent and are skipped (you'll see a note).</li>
+        <li>Image adjustments (exposure, contrast…) are not transferred.</li>
+        <li>Skewed text and images lose their skew.</li>
+        <li>Font rendering differs slightly between Figma and After Effects; text can be a pixel or two off.</li>
+      </ul>
+
+      <h2 id="tips">Tips for best results</h2>
+      <ul>
+        <li><strong>Name your layers</strong> in Figma — names carry over to AE layers and groups.</li>
+        <li><strong>Install the fonts</strong> before syncing; otherwise AE substitutes them (the sync notes tell you which).</li>
+        <li>Sync <strong>frames</strong> to get a comp per frame. Sync individual layers with Destination <em>Active comp</em> to add them to a comp you're already working in.</li>
+        <li>Use <strong>Break Apart OFF</strong> for complex icons and illustrations; you can still break them apart later in AE.</li>
+        <li>Very large files: sync one frame at a time for the fastest turnaround.</li>
+      </ul>
+
+      <h2 id="update">Updating</h2>
+      <ol>
+        <li>Download the new zips from the <a href="https://github.com/JayPrIO/figma2ae/releases/latest">latest release</a>.</li>
+        <li><strong>After Effects:</strong> unzip, run <code>sh install.sh</code> again (it replaces the old version), then <strong>restart After Effects</strong>.</li>
+        <li><strong>Figma:</strong> unzip and replace the contents of your existing plugin folder (same location), then close and re-run the plugin. If you put it in a new location, import its <code>manifest.json</code> again and remove the old entry under <em>Plugins ▸ Development ▸ Manage plugins in development</em>.</li>
+      </ol>
+
+      <h2 id="uninstall">Uninstalling</h2>
+      <ul>
+        <li><strong>After Effects panel:</strong> in the unzipped folder run <code>sh install.sh --uninstall</code>, then restart After Effects.</li>
+        <li><strong>Figma plugin:</strong> <em>Plugins ▸ Development ▸ Manage plugins in development</em> ▸ remove Figma2AE, then delete its folder.</li>
+        <li><strong>Optional clean-up:</strong> delete <code>~/Library/Caches/Figma2AE</code> (image cache) and <code>~/Library/Logs/Figma2AE</code> (logs).</li>
+      </ul>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+
+      <h3 id="ts-panel-missing">“Figma2AE” isn't listed under Window ▸ Extensions</h3>
+      <ol>
+        <li>Check your version: After Effects ▸ About After Effects must be <strong>2023 (23.0) or newer</strong>.</li>
+        <li>Run <code>sh install.sh</code> again and make sure it prints <em>Installed to: …</em>.</li>
+        <li><strong>Fully quit</strong> After Effects (<kbd>⌘</kbd> <kbd>Q</kbd>) and reopen it — extensions are only discovered at launch.</li>
+      </ol>
+
+      <h3>The plugin says “After Effects not found”</h3>
+      <ol>
+        <li>After Effects must be running with the Figma2AE panel <strong>open</strong>.</li>
+        <li>In a browser, open <a href="http://localhost:7741/health">http://localhost:7741/health</a>. If you see <code>"ok":true</code>, the panel is listening — press <em>Retry now</em> in the plugin.</li>
+        <li>If the page doesn't load, check the panel's status line. A security tool or another app using ports 7741–7745 can block it; the panel automatically tries the next port.</li>
+      </ol>
+
+      <h3>“Unable to load code” when opening the Figma plugin</h3>
+      <p>The plugin folder was moved or deleted. Import <code>figma-plugin/manifest.json</code> again from its current location.</p>
+
+      <h3>“Figma sync failed” in the panel</h3>
+      <ol>
+        <li>Expand the entry in the panel's Activity list for details.</li>
+        <li>Check the log: in Finder press <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>G</kbd> and open <code>~/Library/Logs/Figma2AE/bridge.log</code>.</li>
+        <li>Make sure you're on the <a href="https://github.com/JayPrIO/figma2ae/releases/latest">latest release</a>, then <a href="https://github.com/JayPrIO/figma2ae/issues/new">open an issue</a> with the log and, if possible, the exported <code>.f2ae.json</code> bundle.</li>
+      </ol>
+
+      <h3>Fonts look different</h3>
+      <p>The sync notes list substituted fonts. Install the exact font family and style on your Mac (the same file Figma uses), restart After Effects, and sync again.</p>
+
+      <h3>Mixed text styles collapsed into one</h3>
+      <p>Several styles inside one text layer need After Effects 24.3 or newer. On older versions the most-used style is applied to the whole layer.</p>
+
+      <h2 id="faq">FAQ &amp; privacy</h2>
+      <details class="faq"><summary>Does my design get uploaded anywhere?</summary><p>No. The plugin sends data only to the Figma2AE panel on the same computer (<code>localhost</code>). The panel only accepts connections from your own machine and from the Figma plugin. There is no telemetry.</p></details>
+      <details class="faq"><summary>Why does the installer change an Adobe setting?</summary><p>After Effects only loads extensions from Adobe Exchange unless <code>PlayerDebugMode</code> is enabled. The installer turns it on so the Figma2AE panel can load. This is the standard way to install independent CEP extensions.</p></details>
+      <details class="faq"><summary>Does it work on Windows?</summary><p>Not officially. The panel and plugin are cross-platform, but the installer and testing target macOS.</p></details>
+      <details class="faq"><summary>Can I edit the gradients in After Effects?</summary><p>Yes — select the gradient layer and open Effect Controls ▸ <em>Tritone</em>: Highlights is the start colour, Shadows the end colour, Midtones the middle. The gradient's direction is on the layer's Gradient Fill (Start/End Point).</p></details>
+      <details class="faq"><summary>Is it free?</summary><p>Yes, free and open source. Contributions and bug reports are welcome on <a href="https://github.com/JayPrIO/figma2ae">GitHub</a>.</p></details>
+
+      <h2 id="developers">Building from source</h2>
+      <p>Requires Node.js 20 or newer.</p>
+      <div class="copy"><pre><code>git clone https://github.com/JayPrIO/figma2ae.git
+cd figma2ae
+make install      # install dependencies
+make check        # typecheck + full test suite
+make build        # build everything into ./dist
+make install-ae   # install the AE panel from your build</code></pre></div>
+      <p>Then import <code>figma-plugin/manifest.json</code> (or <code>dist/figma-plugin/manifest.json</code>) in Figma. See the <a href="https://github.com/JayPrIO/figma2ae#readme">README</a> for architecture, debugging and release details.</p>
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>Figma2AE · Not affiliated with Figma or Adobe.</span>
+      <span><a href="./">Home</a> · <a href="https://github.com/JayPrIO/figma2ae/issues">Report an issue</a> · <a href="https://github.com/JayPrIO/figma2ae">Source</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Copy buttons on code blocks.
+    document.querySelectorAll('.copy').forEach(function (box) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', function () {
+        var text = box.querySelector('code').innerText;
+        var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500); };
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+      });
+      box.appendChild(btn);
+    });
+    // Highlight the current section in the table of contents.
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+      var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+      if (!('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id); });
+        });
+      }, { rootMargin: '-80px 0px -70% 0px' });
+      targets.forEach(function (t) { io.observe(t); });
+    })();
+  </script>
+</body>
+</html>

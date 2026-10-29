@@ -1,6 +1,6 @@
 # Figma2AE — top-level developer commands. Requires Node 20+ (see .nvmrc).
 .DEFAULT_GOAL := help
-.PHONY: help install build build-dev test test-watch bench typecheck check package release install-ae uninstall-ae dev-bridge clean
+.PHONY: help install build build-dev test test-watch bench typecheck check package release install-ae uninstall-ae dev-bridge site clean
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -28,6 +28,7 @@ typecheck: ## Strict TypeScript across all workspaces (jsx sources against lib E
 
 check: typecheck test ## Typecheck + tests (what CI runs)
 	node scripts/check-sources.mjs
+	node scripts/check-site.mjs
 
 package: build ## Build and zip release artifacts into dist/release
 	node scripts/package.mjs
@@ -40,6 +41,10 @@ uninstall-ae: ## Remove the AE panel
 
 dev-bridge: ## Standalone bridge (no AE): saves synced documents to ./received
 	npm run dev:bridge
+
+site: ## Check and preview the GitHub Pages site at http://localhost:8080
+	node scripts/check-site.mjs
+	cd site && python3 -m http.server 8080
 
 clean: ## Remove build outputs
 	rm -rf dist */dist received

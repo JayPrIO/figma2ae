@@ -32,6 +32,9 @@ jobs:
       - name: Source checks (versions, forbidden characters)
         run: node scripts/check-sources.mjs
 
+      - name: Site link check
+        run: node scripts/check-site.mjs
+
       - name: Typecheck
         run: npm run typecheck
 

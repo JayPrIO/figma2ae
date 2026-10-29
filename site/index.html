@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Figma2AE — Figma to After Effects, as native layers</title>
+  <meta name="description" content="Send Figma designs to Adobe After Effects as native, editable shape, text and image layers — with correct anchors, stacking and parenting. Free, local, open source." />
+  <meta property="og:title" content="Figma2AE — Figma to After Effects, as native layers" />
+  <meta property="og:description" content="Live bridge from Figma to After Effects: editable shape layers, real text, masks, gradients and parenting." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a class="logo" href="./"><img src="favicon.svg" alt="" /><span>Figma<b>2</b>AE</span></a>
+      <div class="nav-links">
+        <a href="#features" class="hide-sm">Features</a>
+        <a href="#how" class="hide-sm">How it works</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com/JayPrIO/figma2ae">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="badge"><span class="dot"></span><span id="version-badge">Free &amp; open source · macOS · After Effects 2023+</span></span>
+      <h1>Figma to After Effects, as <em>native layers</em>.</h1>
+      <p class="lead">Select a frame in Figma, press <strong>Sync</strong>, and it lands in After Effects as editable shape layers, live text, images and masks — with anchor points, stacking order and parenting already right.</p>
+      <div class="cta">
+        <a class="btn primary" href="docs.html#install">Get started</a>
+        <a class="btn ghost" id="dl-latest" href="https://github.com/JayPrIO/figma2ae/releases/latest">Download <small id="dl-version">latest release</small></a>
+      </div>
+      <p class="fine">Runs entirely on your Mac. Your designs never leave your computer.</p>
+
+      <div class="diagram" role="img" aria-label="Figma plugin sends the design over a local connection to the Figma2AE panel in After Effects, which builds native layers.">
+        <svg viewBox="0 0 820 150" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0,0 L10,5 L0,10 z" /></marker></defs>
+          <rect class="box" x="10" y="30" width="200" height="90" rx="12" />
+          <text class="lbl" x="110" y="68" text-anchor="middle">Figma plugin</text>
+          <text class="sub" x="110" y="90" text-anchor="middle">Sync Selection · Break Apart</text>
+          <rect class="box" x="310" y="30" width="200" height="90" rx="12" />
+          <text class="lbl" x="410" y="68" text-anchor="middle">Figma2AE panel</text>
+          <text class="sub" x="410" y="90" text-anchor="middle">inside After Effects</text>
+          <rect class="box" x="610" y="30" width="200" height="90" rx="12" />
+          <text class="lbl" x="710" y="68" text-anchor="middle">Native AE layers</text>
+          <text class="sub" x="710" y="90" text-anchor="middle">shapes · text · images · mattes</text>
+          <path class="arrow" d="M214 75 H 304" marker-end="url(#ah)" />
+          <text class="sub" x="259" y="64" text-anchor="middle">localhost</text>
+          <path class="arrow" d="M514 75 H 604" marker-end="url(#ah)" />
+          <text class="sub" x="559" y="64" text-anchor="middle">build</text>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <section class="block" id="features">
+    <div class="wrap">
+      <h2 class="title">Built for motion designers</h2>
+      <p class="sub">Everything arrives the way you would have built it by hand — just in seconds.</p>
+      <div class="grid">
+        <div class="card"><div class="icon">◆</div><h3>Real shape layers</h3><p>Rectangles and ellipses stay parametric. Vectors, booleans, stars and polygons become editable bezier paths.</p></div>
+        <div class="card"><div class="icon">T</div><h3>Live text</h3><p>Point and paragraph text with font, size, tracking, leading, alignment and mixed styles in one layer.</p></div>
+        <div class="card"><div class="icon">⌖</div><h3>Correct anchors &amp; parenting</h3><p>Anchor points sit at each layer's centre; groups and frames become parents, so rotation and scale behave.</p></div>
+        <div class="card"><div class="icon">▦</div><h3>Auto Layout aware</h3><p>Positions come from Figma's final layout, so nested Auto Layout frames land exactly where they appear.</p></div>
+        <div class="card"><div class="icon">◐</div><h3>Masks, clips &amp; gradients</h3><p>Figma masks become track mattes, clipping frames become precomps, and linear/radial gradients come across with transparency.</p></div>
+        <div class="card"><div class="icon">▣</div><h3>Images &amp; effects</h3><p>Image fills are placed and masked exactly; drop shadows, blurs, opacity and blend modes carry over.</p></div>
+        <div class="card"><div class="icon">⇄</div><h3>Break Apart or keep grouped</h3><p>One layer per element with parenting — or one tidy shape layer per selection. Your call, per sync.</p></div>
+        <div class="card"><div class="icon">↓</div><h3>PNG, SVG &amp; PDF export</h3><p>Export the selection as image files straight from the plugin, or as a bundle to import into AE later.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt" id="how">
+    <div class="wrap">
+      <h2 class="title">Up and running in three steps</h2>
+      <p class="sub">Install once. After that it's just select → Sync.</p>
+      <div class="steps">
+        <div class="step"><h3>Install the AE panel</h3><p>Download the release, run <code>sh install.sh</code>, restart After Effects and open <em>Window ▸ Extensions ▸ Figma2AE</em>.</p></div>
+        <div class="step"><h3>Add the Figma plugin</h3><p>In the Figma desktop app: <em>Plugins ▸ Development ▸ Import plugin from manifest…</em> and pick <code>manifest.json</code>.</p></div>
+        <div class="step"><h3>Select &amp; Sync</h3><p>Select frames or layers, choose <strong>Break Apart</strong> on or off, press <strong>Sync Selection</strong>. Done.</p></div>
+      </div>
+      <p style="margin-top:24px"><a class="btn ghost" href="docs.html">Read the full guide →</a></p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2 class="title">Break Apart, or keep it grouped</h2>
+      <p class="sub">The toggle at the top of the plugin decides how your design is laid out in After Effects.</p>
+      <div class="compare">
+        <div class="card">
+          <h3>Break Apart: ON</h3>
+          <p>Best for animating individual elements.</p>
+          <ul>
+            <li>Every Figma layer becomes its own AE layer</li>
+            <li>Frames &amp; groups become parents (nulls or background layers)</li>
+            <li>Masks become track mattes, clipped frames become precomps</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Break Apart: OFF</h3>
+          <p>Best for keeping your timeline clean.</p>
+          <ul>
+            <li>Each selection becomes one shape layer</li>
+            <li>The Figma hierarchy is kept as nested shape groups</li>
+            <li>Only text, images, gradients and effects get their own layers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt">
+    <div class="wrap" style="text-align:center">
+      <h2 class="title">Ready to try it?</h2>
+      <p class="sub" style="margin-inline:auto">Free, open source, and private by design. Requires macOS, After Effects 2023 or newer, and the Figma desktop app.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/JayPrIO/figma2ae/releases/latest/download/Figma2AE-ae-extension.zip">Download AE panel</a>
+        <a class="btn primary" href="https://github.com/JayPrIO/figma2ae/releases/latest/download/Figma2AE-figma-plugin.zip">Download Figma plugin</a>
+      </div>
+      <p class="fine"><a href="docs.html#install">Installation guide</a> · <a href="https://github.com/JayPrIO/figma2ae/releases">All releases</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>Figma2AE · Not affiliated with Figma or Adobe.</span>
+      <span><a href="docs.html">Docs</a> · <a href="https://github.com/JayPrIO/figma2ae/issues">Report an issue</a> · <a href="https://github.com/JayPrIO/figma2ae">Source</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Show the latest release version (progressive enhancement; the page works without it).
+    (function () {
+      var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      if (ctrl) setTimeout(function () { ctrl.abort(); }, 4000);
+      fetch('https://api.github.com/repos/JayPrIO/figma2ae/releases/latest', ctrl ? { signal: ctrl.signal } : {})
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (rel) {
+          if (!rel || !rel.tag_name) return;
+          document.getElementById('dl-version').textContent = rel.tag_name;
+          document.getElementById('version-badge').textContent = rel.tag_name + ' · macOS · After Effects 2023+';
+        })
+        .catch(function () {});
+    })();
+  </script>
+</body>
+</html>

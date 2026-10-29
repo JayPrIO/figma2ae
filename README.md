@@ -1,5 +1,7 @@
 # Figma2AE
 
+**[Website & docs](https://jayprio.github.io/figma2ae/)**
+
 Send Figma selections to Adobe After Effects as **native, editable layers**: shape layers with
 parametric rectangles and ellipses, bezier paths, live text, images, masks and precomps. Anchor
 points, stacking order and parenting all come across correctly.
@@ -22,9 +24,9 @@ Figma plugin ──(ws://localhost:7741)──▶ AE panel (CEP + Node) ──�
 ## Install (users)
 
 1. Download both zips from the [latest release](../../releases/latest).
-2. **After Effects:** unzip `Figma2AE-ae-extension-*.zip` and run `sh install.sh` in Terminal.
+2. **After Effects:** unzip `Figma2AE-ae-extension.zip` and run `sh install.sh` in Terminal.
    Restart AE, then open **Window ▸ Extensions ▸ Figma2AE**. Keep the panel open (docked is fine).
-3. **Figma:** unzip `Figma2AE-figma-plugin-*.zip` somewhere permanent. In the Figma desktop app
+3. **Figma:** unzip `Figma2AE-figma-plugin.zip` somewhere permanent. In the Figma desktop app
    choose **Plugins ▸ Development ▸ Import plugin from manifest…** and pick `figma-plugin/manifest.json`.
 4. Select frames or layers in Figma, open **Figma2AE** and press **Sync Selection**.
 
@@ -107,8 +109,15 @@ checklist in PLAN.md §7.
 
 Bump the version in every `package.json`, in `shared/src/version.ts` and in
 `ae-extension/cep/CSXS/manifest.xml`. `scripts/check-sources.mjs` enforces that they match. Then
-run `git tag vX.Y.Z && git push --tags`. The release workflow tests, builds, zips and publishes
-the GitHub Release with SHA-256 checksums.
+run `git tag vX.Y.Z && git push --tags` (or create the tag on GitHub). The release workflow tests,
+builds, zips and publishes the GitHub Release with SHA-256 checksums automatically. To rebuild an
+existing tag, use **Actions ▸ Release ▸ Run workflow**.
+
+## Website (GitHub Pages)
+
+`site/` is a static site with no build step, deployed by `.github/workflows/pages.yml` on every push
+to `main` that touches `site/`. One-time setup: **Settings ▸ Pages ▸ Source: GitHub Actions**.
+Preview it locally with `make site`.
 
 ## Security
 
