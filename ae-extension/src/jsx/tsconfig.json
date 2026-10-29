@@ -1,0 +1,9 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES5"],
+    "types": [],
+    "noUnusedLocals": true
+  },
+  "include": ["./**/*.ts"]
+}

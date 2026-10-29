@@ -1,0 +1,25 @@
+{
+  "name": "@f2ae/figma-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Figma plugin: selection extractor (main thread) + Preact UI with WebSocket transport.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch"
+  },
+  "dependencies": {
+    "@f2ae/shared": "1.0.0",
+    "preact": "10.27.2"
+  },
+  "devDependencies": {
+    "@f2ae/bridge-server": "1.0.0",
+    "@figma/plugin-typings": "1.142.0",
+    "@preact/preset-vite": "2.10.2",
+    "@types/ws": "8.18.2",
+    "vite": "7.3.7",
+    "vite-plugin-singlefile": "2.3.0",
+    "ws": "8.18.3"
+  }
+}

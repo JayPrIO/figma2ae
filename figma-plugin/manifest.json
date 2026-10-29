@@ -1,0 +1,28 @@
+{
+  "name": "Figma2AE",
+  "id": "io.jaypr.figma2ae",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": [
+    "figma"
+  ],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": [
+      "ws://localhost:7741",
+      "ws://localhost:7742",
+      "ws://localhost:7743",
+      "ws://localhost:7744",
+      "ws://localhost:7745"
+    ],
+    "devAllowedDomains": [
+      "ws://localhost:7741",
+      "ws://localhost:7742",
+      "ws://localhost:7743",
+      "ws://localhost:7744",
+      "ws://localhost:7745"
+    ],
+    "reasoning": "Figma2AE sends the selected design to the Figma2AE panel running inside Adobe After Effects on this computer (localhost only). No data leaves the machine."
+  }
+}

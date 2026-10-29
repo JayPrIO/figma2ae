@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*/dist/
+*.log
+.DS_Store
+coverage/
+.vite/
+*.tsbuildinfo
+PROMPT.md
+.claude
+received/
+test-results/

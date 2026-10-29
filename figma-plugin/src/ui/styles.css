@@ -1,0 +1,272 @@
+/* Uses Figma's theme tokens (themeColors: true) with sensible fallbacks. */
+:root {
+  --bg: var(--figma-color-bg, #fff);
+  --bg2: var(--figma-color-bg-secondary, #f5f5f5);
+  --text: var(--figma-color-text, #1e1e1e);
+  --muted: var(--figma-color-text-secondary, #757575);
+  --border: var(--figma-color-border, #e6e6e6);
+  --brand: var(--figma-color-bg-brand, #0d99ff);
+  --brand-text: var(--figma-color-text-onbrand, #fff);
+  --ok: var(--figma-color-text-success, #14ae5c);
+  --err: var(--figma-color-text-danger, #f24822);
+  --warn: var(--figma-color-text-warning, #b86200);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 11px/1.45 Inter, -apple-system, system-ui, sans-serif;
+}
+
+.app {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+
+.brand span {
+  color: #9999ff;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bg2);
+  color: var(--muted);
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.pill.connected {
+  color: var(--ok);
+}
+
+.pill.connecting .dot {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.selection {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--bg2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle.primary .toggle-label {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.toggle-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-hint {
+  color: var(--muted);
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch {
+  flex: none;
+  width: 28px;
+  height: 16px;
+  border-radius: 8px;
+  background: var(--border);
+  position: relative;
+  transition: background 0.15s;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+  transition: transform 0.15s;
+}
+
+.toggle input:checked + .switch {
+  background: var(--brand);
+}
+
+.toggle input:checked + .switch::after {
+  transform: translateX(12px);
+}
+
+.toggle input:focus-visible + .switch {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.advanced {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+select,
+input[type='number'] {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 4px;
+  width: 140px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+}
+
+button.primary {
+  flex: 1;
+  padding: 8px 12px;
+  font-weight: 600;
+  background: var(--brand);
+  color: var(--brand-text);
+}
+
+button.secondary {
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+button.link {
+  align-self: flex-start;
+  background: none;
+  padding: 0;
+  color: var(--brand);
+}
+
+.hint {
+  color: var(--muted);
+}
+
+.result:empty {
+  display: none;
+}
+
+.progress {
+  color: var(--muted);
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.err {
+  color: var(--err);
+}
+
+.warnings {
+  margin-top: 6px;
+  color: var(--warn);
+}
+
+.warnings ul {
+  margin: 4px 0 0;
+  padding-left: 16px;
+  max-height: 160px;
+  overflow: auto;
+  color: var(--muted);
+}
+
+.actions.export select {
+  flex: 1;
+  width: auto;
+}

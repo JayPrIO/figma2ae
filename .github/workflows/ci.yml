@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Typecheck · Test · Build
+    # Apple Silicon runner: matches the product's target platform
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Source checks (versions, forbidden characters)
+        run: node scripts/check-sources.mjs
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests (unit, integration, mocked-AE E2E)
+        run: npx vitest run --reporter=default --reporter=junit --outputFile.junit=test-results/junit.xml
+
+      - name: Benchmarks (smoke)
+        run: npx vitest bench --run
+
+      - name: Build
+        run: node scripts/build.mjs --quiet
+
+      - name: Package
+        run: node scripts/package.mjs
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          if-no-files-found: ignore
+
+      - name: Upload release candidates
+        uses: actions/upload-artifact@v4
+        with:
+          name: figma2ae-${{ github.sha }}
+          path: dist/release/
+          retention-days: 14

@@ -1,0 +1,22 @@
+{
+  "name": "@f2ae/bridge-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local WebSocket relay between the Figma plugin and After Effects. Embedded in the AE panel; also runs standalone for development.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "bin": { "f2ae-bridge": "dist/cli.js" },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "node build.mjs",
+    "dev": "node build.mjs && node dist/cli.js --verbose"
+  },
+  "dependencies": {
+    "@f2ae/shared": "1.0.0",
+    "ws": "8.18.3"
+  },
+  "devDependencies": {
+    "@types/ws": "8.18.2"
+  }
+}

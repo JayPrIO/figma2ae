@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Remote DevTools for the panel: open http://localhost:8092 in Chrome while AE runs. Dev builds only. -->
+<ExtensionList>
+  <Extension Id="io.jaypr.figma2ae.panel">
+    <HostList>
+      <Host Name="AEFT" Port="8092" />
+    </HostList>
+  </Extension>
+</ExtensionList>

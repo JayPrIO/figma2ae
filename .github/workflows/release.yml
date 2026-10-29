@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build & publish GitHub Release
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Verify tag matches version
+        run: node scripts/check-sources.mjs --tag "${GITHUB_REF_NAME}"
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npx vitest run
+
+      - name: Build
+        run: node scripts/build.mjs --quiet
+
+      - name: Package
+        run: node scripts/package.mjs
+
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Figma2AE ${{ github.ref_name }}
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            dist/release/Figma2AE-figma-plugin-*.zip
+            dist/release/Figma2AE-ae-extension-*.zip
+            dist/release/SHA256SUMS.txt
+          body: |
+            ## Install
+
+            **Figma** — unzip `Figma2AE-figma-plugin-*.zip`, then in the Figma desktop app:
+            *Plugins ▸ Development ▸ Import plugin from manifest…* → `figma-plugin/manifest.json`.
+
+            **After Effects 2023+ (macOS)** — unzip `Figma2AE-ae-extension-*.zip`, run `sh install.sh`,
+            restart After Effects, open *Window ▸ Extensions ▸ Figma2AE*.
+
+            Verify downloads with `shasum -a 256 -c SHA256SUMS.txt`.

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Figma2AE</title>
+    <link rel="stylesheet" href="./panel.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">Figma<span>2</span>AE <small id="version"></small></div>
+    </header>
+    <div id="status" class="status starting"><span class="dot"></span><span id="status-text">Starting…</span></div>
+    <div class="actions">
+      <button id="import" title="Import a .f2ae.json bundle exported from the Figma plugin">Import bundle…</button>
+      <input id="file" type="file" accept=".json,application/json" hidden />
+    </div>
+    <h2>Activity</h2>
+    <ul id="activity"></ul>
+    <script src="./panel.js"></script>
+  </body>
+</html>
